@@ -26,7 +26,11 @@ and then pays it."""
 def main() -> None:
     out = Path("/output/entry.txt")
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(POEM, encoding="utf-8")
+    out.write_text(POEM, encoding="utf-8", newline="\n")
+    # Self-check: the entry must stay exactly the poem, UTF-8, 1-1000 chars.
+    written = out.read_text(encoding="utf-8")
+    if written != POEM or not 1 <= len(written) <= 1000:
+        raise SystemExit("entry.txt does not match the poem")
 
 if __name__ == "__main__":
     main()
